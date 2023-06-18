@@ -1,0 +1,80 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block msg %}
+    {% if messages %}
+        {% for message in messages %}
+            <div {% if message.tags %} class="alert alert-{{message.tags}} alert-dismissible fade show" {% endif %}><strong>{{ message }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times</span>
+            </button>
+        </div>
+
+        {% endfor %}
+    {% endif %}
+{% endblock msg %}
+
+{% block side %}
+<div class="col-sm-2 text-white my-5 text-center">
+    <h4 class="my-5">Profile</h4>
+    <h5>{{ full_name }}</h5>
+</div>
+{% endblock side %}
+
+{% block content %}
+
+<div class="col-sm-10">
+    <h3 class="text-white my-5">Dashboard Page</h3>
+    <h4 class="text-center alert alert-info mt-3">Show User Information</h4>
+    {% if user %}
+
+        <table class="table table-hover bg-white">
+            <tbody>
+                <tr>
+                    <th scope="col" style="width:20%">ID</th>
+                    <th scope="row">{{ user.id }}</th>
+                </tr>
+                <tr>
+                    <th scope="col" style="width:20%">User Name</th>
+                    <td>{{ user.username }}</td>
+                </tr>    
+                <tr>
+                    <th scope="col" style="width:20%">First Name</th>
+                    <td>{{ user.first_name }}</td>
+                </tr>
+                <tr>
+                    <th scope="col" style="width:20%">Last Name</th>
+                    <td>{{ user.last_name }}</td>
+                </tr>
+                <tr>
+                    <th scope="col" style="width:20%">Email</th>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th scope="col" style="width:20%">Bio</th> 
+                    <td>{{ profile.bio }}</td>
+                </tr>
+                <tr>
+                    <th scope="col" style="width:20%">Profile Picture</th>
+                    <td>
+                        {% if profile.propic %}
+                        <img src="{{ profile.propic.url }}" alt="Profile Picture" style="width:20%" class="card-img-top">
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" style="width:20%">Action</th>
+                    <td>
+                        <a href="{% url 'updateuser' user.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    {% else %}
+
+    <h4 class="text-center alert alert-arning">No Record</h4>    
+
+    {% endif %}
+</div>
+{% endblock content %}
